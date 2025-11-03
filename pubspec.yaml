@@ -27,7 +27,11 @@ dependencies:
   # Utilities
   intl: ^0.18.1
   shared_preferences: ^2.2.2
-  
+
+  # Audio & Haptic
+  just_audio: ^0.9.36
+  vibration: ^1.8.4
+
   # Icons
   cupertino_icons: ^1.0.6
 

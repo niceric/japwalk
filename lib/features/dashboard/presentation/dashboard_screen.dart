@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../core/constants/app_strings.dart';
+import '../../walking_session/presentation/pre_walk_setup_screen.dart';
 
-/// Main dashboard screen (placeholder for Phase 1)
+/// Main dashboard screen
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
@@ -44,10 +45,9 @@ class DashboardScreen extends StatelessWidget {
               const SizedBox(height: 48),
               ElevatedButton.icon(
                 onPressed: () {
-                  // TODO: Navigate to pre-walk setup (Phase 2)
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Walking session coming in Phase 2!'),
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const PreWalkSetupScreen(),
                     ),
                   );
                 },
@@ -62,7 +62,7 @@ class DashboardScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               Text(
-                'Full dashboard features coming soon...',
+                'Tap the button above to start your walking session',
                 style: theme.textTheme.bodySmall?.copyWith(
                   fontStyle: FontStyle.italic,
                 ),
