@@ -48,4 +48,17 @@ class AppColors {
     end: Alignment.bottomRight,
     colors: [darkPrimary, darkAccent],
   );
+
+  // Convenience accessors (use light mode colors by default)
+  static const Color backgroundLight = lightBackground;
+  static const Color backgroundDark = darkBackground;
+  static const Color primary = lightPrimary;
+  static const Color secondary = lightSecondary;
+  static const Color accent = lightAccent;
+  static const Color secondaryLight = lightSecondary;
+  static const Color secondaryDark = darkSecondary;
+  static const Color textPrimaryLight = lightTextPrimary;
+  static const Color textPrimaryDark = darkTextPrimary;
+  static const Color textSecondaryLight = lightTextSecondary;
+  static const Color textSecondaryDark = darkTextSecondary;
 }
