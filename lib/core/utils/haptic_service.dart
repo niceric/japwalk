@@ -1,4 +1,4 @@
-import 'package:vibration/vibration.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 class HapticService {
   static final HapticService _instance = HapticService._internal();
@@ -9,47 +9,53 @@ class HapticService {
 
   // Initialize and check if device supports vibration
   Future<void> initialize() async {
-    _isSupported = await Vibration.hasVibrator() ?? false;
+    _isSupported = await Vibrate.canVibrate;
   }
 
   // Light haptic feedback for button presses
   Future<void> light() async {
     if (!_isSupported) return;
-    await Vibration.vibrate(duration: 50);
+    Vibrate.feedback(FeedbackType.light);
   }
 
   // Medium haptic feedback for interval changes
   Future<void> medium() async {
     if (!_isSupported) return;
-    await Vibration.vibrate(duration: 100);
+    Vibrate.feedback(FeedbackType.medium);
   }
 
   // Heavy haptic feedback for session completion
   Future<void> heavy() async {
     if (!_isSupported) return;
-    await Vibration.vibrate(duration: 200);
+    Vibrate.feedback(FeedbackType.heavy);
   }
 
   // Custom pattern for interval transition
   // Pattern: [wait, vibrate, wait, vibrate]
   Future<void> intervalTransition() async {
     if (!_isSupported) return;
-    await Vibration.vibrate(
-      pattern: [0, 100, 200, 100],
-    );
+    Vibrate.vibrateWithPauses([
+      const Duration(milliseconds: 100),
+      const Duration(milliseconds: 200),
+      const Duration(milliseconds: 100),
+    ]);
   }
 
   // Pattern for session complete
   Future<void> sessionComplete() async {
     if (!_isSupported) return;
-    await Vibration.vibrate(
-      pattern: [0, 100, 100, 100, 100, 200],
-    );
+    Vibrate.vibrateWithPauses([
+      const Duration(milliseconds: 100),
+      const Duration(milliseconds: 100),
+      const Duration(milliseconds: 100),
+      const Duration(milliseconds: 100),
+      const Duration(milliseconds: 200),
+    ]);
   }
 
   // Cancel any ongoing vibration
   Future<void> cancel() async {
-    if (!_isSupported) return;
-    await Vibration.cancel();
+    // flutter_vibrate doesn't have a cancel method, but vibrations are short enough
+    // that this isn't typically needed. Keeping method for API compatibility.
   }
 }
