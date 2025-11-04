@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/onboarding_page.dart';
 import '../widgets/page_indicator.dart';
 import '../../../core/constants/app_strings.dart';
-import '../../dashboard/presentation/dashboard_screen.dart';
+import '../../dashboard/presentation/main_navigation_screen.dart';
 
 /// Onboarding screen with 3 swipeable pages
 class OnboardingScreen extends StatefulWidget {
@@ -62,7 +62,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     Navigator.of(context).pushReplacement(
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) =>
-            const DashboardScreen(),
+            const MainNavigationScreen(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
             opacity: animation,
