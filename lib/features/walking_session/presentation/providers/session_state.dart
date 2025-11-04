@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/models/interval_config.dart';
 import '../../data/models/walking_session.dart';
+import '../../data/repositories/session_repository.dart';
 
 // Enum for interval type
 enum IntervalType { fast, slow }
@@ -69,8 +70,10 @@ class SessionNotifier extends StateNotifier<SessionState> {
   Timer? _timer;
   final void Function()? onIntervalChange;
   final void Function()? onSessionComplete;
+  final SessionRepository _repository;
 
-  SessionNotifier({
+  SessionNotifier(
+    this._repository, {
     this.onIntervalChange,
     this.onSessionComplete,
   }) : super(SessionState.initial());
@@ -140,7 +143,7 @@ class SessionNotifier extends StateNotifier<SessionState> {
   }
 
   // Complete the session
-  void _completeSession() {
+  void _completeSession() async {
     _timer?.cancel();
     final session = state.session;
     if (session != null) {
@@ -149,6 +152,10 @@ class SessionNotifier extends StateNotifier<SessionState> {
         completedCycles: session.totalCycles,
         completed: true,
       );
+
+      // Save the completed session to the database
+      await _repository.saveSession(completedSession);
+
       state = state.copyWith(
         session: completedSession,
         status: SessionStatus.completed,
@@ -196,7 +203,8 @@ class SessionNotifier extends StateNotifier<SessionState> {
 
 // Provider for session state
 final sessionProvider = StateNotifierProvider<SessionNotifier, SessionState>((ref) {
-  return SessionNotifier();
+  final repository = ref.watch(sessionRepositoryProvider);
+  return SessionNotifier(repository);
 });
 
 // Provider for interval configuration
